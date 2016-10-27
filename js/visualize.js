@@ -24,7 +24,7 @@ var translate = function(x, y) {
 var createChart = function() {
     var container = d3.select('.container');
     var svg = container.append('svg')
-        .attr('width', width)
+        .attr('width', innerWidth)
         .attr('height', height);
 
     var xAxis = d3.axisBottom(XScale).tickSizeInner(-innerHeight);
@@ -52,19 +52,24 @@ var createChart = function() {
 }
 
 var showData = function(data) {
+
     var dataLine = d3.select('.line');
     var svg = d3.select('svg');
 
     XScale = d3.scaleLinear()
-        .domain([0, data.length+1])
+        .domain([0, data.length])
         .range([0, innerWidth]);
 
-    var xAxis = d3.axisBottom(XScale).tickSizeInner(-innerHeight);
+    var xAxis = d3.axisBottom(XScale).tickSizeInner(-innerHeight).ticks(20);
     svg.select('.xAxis').call(xAxis);
-        
+
     dataLine.select('path')
         .attr('d', line(data))
-        .classed('line', true);
+        .attr('transform',null)
+        .transition()
+        .duration(475)
+        .ease(d3.easeLinear)
+        .attr('transform','translate('+ XScale(-1) +')');
 
     //Bar Chart 
     var chart = d3.select(".chart")
@@ -123,6 +128,8 @@ var setToogleButton = function(){
         button.textContent = "Bar";
     };
     button.click();
+    button.click();
+
 }
 
 var load = function() {
