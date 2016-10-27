@@ -13,6 +13,10 @@ var YScale = d3.scaleLinear()
     .domain(dataRange)
     .range([innerHeight, 0]);
 
+var line = d3.line()
+        .x(function(d, index) {return XScale(index + 1);})
+        .y(function(d) {return YScale(d);});
+
 var translate = function(x, y) {
     return 'translate(' + x + ',' + y + ')';
 }
@@ -38,11 +42,13 @@ var createChart = function() {
 
     svg.append('g')
         .classed('line', true)
-        .attr('transform', translate(margin, margin));
+        .attr('transform', translate(margin, margin))
+        .append('path',line)
 
     svg.append('g')
         .classed('chart', true)
         .attr('transform', translate(margin, margin));
+
 }
 
 var showData = function(data) {
@@ -70,16 +76,9 @@ var showData = function(data) {
 
     circle.exit().remove();
 
-    var line = d3.line()
-        .x(function(d, index) {return XScale(index + 1);})
-        .y(function(d) {return YScale(d);});
-
-    dataLine.select('path').remove();
-
-    dataLine.append('path')
+    dataLine.select('path')
         .attr('d', line(data))
         .classed('line', true);
-
 
     //Bar Chart 
     var chart = d3.select(".chart")
