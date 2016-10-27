@@ -9,7 +9,7 @@ h1{
 
 circle{
 	r:5px;
-	fill: steelblue;
+	fill: rgba(224, 15, 124, 0.85);
 }
 
 .container{
@@ -18,10 +18,14 @@ circle{
 }
 
 .line{
-	stroke:rgba(0,1,1,0.4);
+	stroke:black;
     fill:none;
 }
 
 svg{
 	border: solid rgba(0, 0, 0, 0.5) 1px;
+}
+
+rect{
+	fill: steelblue;
 }

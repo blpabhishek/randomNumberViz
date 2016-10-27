@@ -25,7 +25,7 @@ var showData = function(data) {
         .domain([1, data.length])
         .range([0, innerWidth]);
 
-    var xAxis = d3.axisBottom(XScale).ticks(10);
+    var xAxis = d3.axisBottom(XScale);
     svg.select('.xAxis').call(xAxis);
 
     var circle = dataGroup.selectAll('circle').data(data);
@@ -104,9 +104,8 @@ var createChart = function() {
         .attr('transform', translate(margin, margin));
 }
 
-var load = function() {
+var setPauseButton = function(){
     var lineInterval;
-    createChart();
     var data = genrateNumbers();
     var button = document.getElementById('play-pause');
     button.onclick = function(){
@@ -122,6 +121,27 @@ var load = function() {
         button.textContent = "Pause";
     };
     button.onclick();
+}
+
+var setToogleButton = function(){
+    var button = document.getElementById('toogle');
+    button.onclick = function(){
+        if (button.textContent =="Bar") {
+            d3.select('.chart').attr('visibility', 'visible');
+            d3.select('.dataGroup').attr('visibility', 'hidden');
+            button.textContent = "Line";
+            return;
+        }
+        d3.select('.dataGroup').attr('visibility', 'visible');
+        d3.select('.chart').attr('visibility', 'hidden');
+        button.textContent = "Bar";
+    };
+}
+
+var load = function() {
+    createChart();
+    setPauseButton();
+    setToogleButton();
 };
 
 window.onload = load;
