@@ -22,7 +22,7 @@ var showData = function(data) {
     var svg = d3.select('svg');
 
     XScale = d3.scaleLinear()
-        .domain([1, data.length])
+        .domain([0, data.length+1])
         .range([0, innerWidth]);
 
     var xAxis = d3.axisBottom(XScale);
@@ -60,10 +60,12 @@ var showData = function(data) {
 
     var barWidth = innerWidth / (data.length*4);
 
+    var alignBarSpace = barWidth/2;
+
     var bars = chart.selectAll('rect').data(data);
 
     bars.enter().append("rect")
-      .attr("x", function(d,i) { return XScale(i+1); })
+      .attr("x", function(d,i) { return XScale(i+1)-alignBarSpace;})
       .attr("y", function(d) { return YScale(d); })
       .attr("height", function(d) { return innerHeight - YScale(d); })
       .attr("width", barWidth);
@@ -145,4 +147,3 @@ var load = function() {
 };
 
 window.onload = load;
-
