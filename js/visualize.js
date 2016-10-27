@@ -1,6 +1,17 @@
 var height = 700;
 var width = 1500;
 var margin = 30;
+var dataRange = [0, 100];
+var innerWidth = width - (2 * margin);
+var innerHeight = height - (2 * margin);
+
+var XScale = d3.scaleLinear()
+    .domain([1, 10])
+    .range([0, innerWidth]);
+
+var YScale = d3.scaleLinear()
+    .domain(dataRange)
+    .range([innerHeight, 0]);
 
 var translate = function(x, y) {
     return 'translate(' + x + ',' + y + ')';
@@ -10,21 +21,12 @@ var showData = function(data) {
     var dataGroup = d3.select('.dataGroup');
     var svg = d3.select('svg');
 
-    var dataRange = [0, 100];
-
-    var XScale = d3.scaleLinear()
+    XScale = d3.scaleLinear()
         .domain([1, data.length])
-        .range([0, width - (2 * margin)]);
-
-    var YScale = d3.scaleLinear()
-        .domain(dataRange)
-        .range([height - (2 * margin), 0]);
+        .range([0, innerWidth]);
 
     var xAxis = d3.axisBottom(XScale);
-    var yAxis = d3.axisLeft(YScale);
-
     svg.select('.xAxis').call(xAxis);
-    svg.select('.yAxis').call(yAxis);
 
     var circle = dataGroup.selectAll('circle').data(data);
 
@@ -33,9 +35,6 @@ var showData = function(data) {
         .append('circle')
         .attr('cx', function(d, index) {return XScale(index + 1);})
         .attr('cy', function(d) {return YScale(d);})
-        .append('title').text(function(d) {
-            return d;
-        });
 
     circle
         .attr('cx', function(d, index) {return XScale(index + 1);})
@@ -59,14 +58,6 @@ var createChart = function() {
     var svg = container.append('svg')
         .attr('width', width)
         .attr('height', height);
-
-    var XScale = d3.scaleLinear()
-        .domain([1, 10])
-        .range([0, width - (2 * margin)]);
-
-    var YScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([height - (2 * margin), 0]);
 
     var xAxis = d3.axisBottom(XScale);
     var yAxis = d3.axisLeft(YScale);
