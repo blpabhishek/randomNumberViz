@@ -138,6 +138,7 @@ var setToogleButton = function(){
         d3.select('.chart').attr('visibility', 'hidden');
         button.textContent = "Bar";
     };
+    button.click();
 }
 
 var load = function() {
