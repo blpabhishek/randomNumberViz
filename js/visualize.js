@@ -17,6 +17,34 @@ var translate = function(x, y) {
     return 'translate(' + x + ',' + y + ')';
 }
 
+var createChart = function() {
+    var container = d3.select('.container');
+    var svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+    var xAxis = d3.axisBottom(XScale).tickSizeInner(-innerHeight);
+    var yAxis = d3.axisLeft(YScale).tickSizeInner(-innerWidth);
+
+    svg.append('g')
+        .call(xAxis)
+        .classed('xAxis', true)
+        .attr('transform', translate(margin, height - margin));
+
+    svg.append('g')
+        .call(yAxis)
+        .classed('yAxis', true)
+        .attr('transform', translate(margin, margin));
+
+    svg.append('g')
+        .classed('line', true)
+        .attr('transform', translate(margin, margin));
+
+    svg.append('g')
+        .classed('chart', true)
+        .attr('transform', translate(margin, margin));
+}
+
 var showData = function(data) {
     var dataLine = d3.select('.line');
     var svg = d3.select('svg');
@@ -58,14 +86,14 @@ var showData = function(data) {
         .attr("width", innerWidth)
         .attr("height", innerHeight);  
 
-    var barWidth = innerWidth / (data.length*4);
+    var barWidth = innerWidth / (data.length * 4);
 
     var alignBarSpace = barWidth/2;
 
     var bars = chart.selectAll('rect').data(data);
 
     bars.enter().append("rect")
-      .attr("x", function(d,i) { return XScale(i+1)-alignBarSpace;})
+      .attr("x", function(d,index) { return XScale(index+1)-alignBarSpace;})
       .attr("y", function(d) { return YScale(d); })
       .attr("height", function(d) { return innerHeight - YScale(d); })
       .attr("width", barWidth);
@@ -75,38 +103,9 @@ var showData = function(data) {
       .attr("height", function(d) { return innerHeight - YScale(d); })
 
     bars.exit().remove();
-
 }
 
-var createChart = function() {
-    var container = d3.select('.container');
-    var svg = container.append('svg')
-        .attr('width', width)
-        .attr('height', height);
-
-    var xAxis = d3.axisBottom(XScale);
-    var yAxis = d3.axisLeft(YScale).tickSizeInner(-innerWidth);
-
-    svg.append('g')
-        .call(xAxis)
-        .classed('xAxis', true)
-        .attr('transform', translate(margin, height - margin));
-
-    svg.append('g')
-        .call(yAxis)
-        .classed('yAxis', true)
-        .attr('transform', translate(margin, margin));
-
-    svg.append('g')
-        .classed('line', true)
-        .attr('transform', translate(margin, margin));
-
-    svg.append('g')
-        .classed('chart', true)
-        .attr('transform', translate(margin, margin));
-}
-
-var setPauseButton = function(){
+var setIntervalButton = function(){
     var lineInterval;
     var data = genrateNumbers();
     var button = document.getElementById('play-pause');
@@ -122,7 +121,7 @@ var setPauseButton = function(){
         }, 500);
         button.textContent = "Pause";
     };
-    button.onclick();
+    button.click();
 }
 
 var setToogleButton = function(){
@@ -143,7 +142,7 @@ var setToogleButton = function(){
 
 var load = function() {
     createChart();
-    setPauseButton();
+    setIntervalButton();
     setToogleButton();
 };
 
