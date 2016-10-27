@@ -1,5 +1,5 @@
 var genrateNumbers = function() {
-    var randomNumbers = new Array(100);
+    var randomNumbers = new Array(10);
     randomNumbers = _.fill(randomNumbers, 0);
     return randomNumbers.map(function(a) {
         return _.random(0, 100); 

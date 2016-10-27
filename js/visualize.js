@@ -25,7 +25,7 @@ var showData = function(data) {
         .domain([0, data.length+1])
         .range([0, innerWidth]);
 
-    var xAxis = d3.axisBottom(XScale);
+    var xAxis = d3.axisBottom(XScale).tickSizeInner(-innerHeight);
     svg.select('.xAxis').call(xAxis);
 
     var circle = dataLine.selectAll('circle').data(data);
@@ -85,7 +85,7 @@ var createChart = function() {
         .attr('height', height);
 
     var xAxis = d3.axisBottom(XScale);
-    var yAxis = d3.axisLeft(YScale);
+    var yAxis = d3.axisLeft(YScale).tickSizeInner(-innerWidth);
 
     svg.append('g')
         .call(xAxis)
