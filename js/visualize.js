@@ -18,7 +18,7 @@ var translate = function(x, y) {
 }
 
 var showData = function(data) {
-    var dataGroup = d3.select('.dataGroup');
+    var dataLine = d3.select('.line');
     var svg = d3.select('svg');
 
     XScale = d3.scaleLinear()
@@ -28,7 +28,7 @@ var showData = function(data) {
     var xAxis = d3.axisBottom(XScale);
     svg.select('.xAxis').call(xAxis);
 
-    var circle = dataGroup.selectAll('circle').data(data);
+    var circle = dataLine.selectAll('circle').data(data);
 
     circle
         .enter()
@@ -46,9 +46,9 @@ var showData = function(data) {
         .x(function(d, index) {return XScale(index + 1);})
         .y(function(d) {return YScale(d);});
 
-    dataGroup.select('path').remove();
+    dataLine.select('path').remove();
 
-    dataGroup.append('path')
+    dataLine.append('path')
         .attr('d', line(data))
         .classed('line', true);
 
@@ -96,7 +96,7 @@ var createChart = function() {
         .attr('transform', translate(margin, margin));
 
     svg.append('g')
-        .classed('dataGroup', true)
+        .classed('line', true)
         .attr('transform', translate(margin, margin));
 
     svg.append('g')
@@ -128,11 +128,11 @@ var setToogleButton = function(){
     button.onclick = function(){
         if (button.textContent =="Bar") {
             d3.select('.chart').attr('visibility', 'visible');
-            d3.select('.dataGroup').attr('visibility', 'hidden');
+            d3.select('.line').attr('visibility', 'hidden');
             button.textContent = "Line";
             return;
         }
-        d3.select('.dataGroup').attr('visibility', 'visible');
+        d3.select('.line').attr('visibility', 'visible');
         d3.select('.chart').attr('visibility', 'hidden');
         button.textContent = "Bar";
     };
