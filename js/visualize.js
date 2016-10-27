@@ -61,21 +61,7 @@ var showData = function(data) {
 
     var xAxis = d3.axisBottom(XScale).tickSizeInner(-innerHeight);
     svg.select('.xAxis').call(xAxis);
-
-    var circle = dataLine.selectAll('circle').data(data);
-
-    circle
-        .enter()
-        .append('circle')
-        .attr('cx', function(d, index) {return XScale(index + 1);})
-        .attr('cy', function(d) {return YScale(d);})
-
-    circle
-        .attr('cx', function(d, index) {return XScale(index + 1);})
-        .attr('cy', function(d) {return YScale(d);})    
-
-    circle.exit().remove();
-
+        
     dataLine.select('path')
         .attr('d', line(data))
         .classed('line', true);
@@ -104,7 +90,7 @@ var showData = function(data) {
     bars.exit().remove();
 }
 
-var setIntervalButton = function(){
+var setIntervalButton = function(time){
     var lineInterval;
     var data = genrateNumbers();
     var button = document.getElementById('play-pause');
@@ -117,7 +103,7 @@ var setIntervalButton = function(){
         lineInterval = setInterval(function() {
         showData(data);
         data = updateData(data);
-        }, 500);
+        }, time);
         button.textContent = "Pause";
     };
     button.click();
@@ -141,7 +127,7 @@ var setToogleButton = function(){
 
 var load = function() {
     createChart();
-    setIntervalButton();
+    setIntervalButton(500);
     setToogleButton();
 };
 
