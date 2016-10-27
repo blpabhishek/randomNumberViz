@@ -1,0 +1,27 @@
+body{
+	font-family: sans-serif;
+	
+}
+h1{
+	font: 'Open-Sans';
+	font-weight: 100;
+}
+
+circle{
+	r:8px;
+	fill: steelblue;
+}
+
+.container{
+	padding: 4px;
+	text-align: center;
+}
+
+.line{
+	stroke:rgba(0,1,1,0.4);
+    fill:none;
+}
+
+svg{
+	border: solid rgba(0, 0, 0, 0.5) 1px;
+}
