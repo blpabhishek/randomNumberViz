@@ -91,6 +91,11 @@ var showData = function(data) {
     bars
       .attr("y", function(d) { return YScale(d); })
       .attr("height", function(d) { return innerHeight - YScale(d); })
+      .attr('transform',null)
+      .transition()
+      .duration(475)
+      .ease(d3.easeLinear)
+      .attr('transform','translate('+ XScale(-1) +')');
 
     bars.exit().remove();
 }
@@ -128,8 +133,6 @@ var setToogleButton = function(){
         button.textContent = "Bar";
     };
     button.click();
-    button.click();
-
 }
 
 var load = function() {
